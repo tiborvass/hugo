@@ -3,8 +3,8 @@ package hugolib
 import (
 	"bytes"
 	"fmt"
-	"github.com/spf13/hugo/source"
-	"github.com/spf13/hugo/target"
+	"github.com/tiborvass/hugo/source"
+	"github.com/tiborvass/hugo/target"
 	"html/template"
 	"io"
 	"strings"

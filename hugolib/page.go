@@ -18,10 +18,10 @@ import (
 	"errors"
 	"fmt"
 	"github.com/BurntSushi/toml"
-	"github.com/spf13/hugo/helpers"
-	"github.com/spf13/hugo/parser"
-	"github.com/spf13/hugo/template/bundle"
-	"github.com/theplant/blackfriday"
+	"github.com/tiborvass/hugo/helpers"
+	"github.com/tiborvass/hugo/parser"
+	"github.com/tiborvass/hugo/template/bundle"
+	"github.com/tiborvass/blackfriday"
 	"html/template"
 	"io"
 	"launchpad.net/goyaml"
@@ -39,6 +39,7 @@ type Page struct {
 	Content         template.HTML
 	Summary         template.HTML
 	TableOfContents template.HTML
+	TocDepthLimit   int
 	Truncated       bool
 	plain           string // TODO should be []byte
 	Params          map[string]interface{}
@@ -110,15 +111,11 @@ func (p *Page) renderBytes(content []byte) []byte {
 }
 
 func (p *Page) renderContent(content []byte) []byte {
-	return renderBytesWithTOC(content, p.guessMarkupType())
-}
-
-func renderBytesWithTOC(content []byte, pagefmt string) []byte {
-	switch pagefmt {
+	switch p.guessMarkupType() {
 	default:
-		return markdownRenderWithTOC(content)
+		return markdownRenderWithTOC(content, p.TocDepthLimit)
 	case "markdown":
-		return markdownRenderWithTOC(content)
+		return markdownRenderWithTOC(content, p.TocDepthLimit)
 	case "rst":
 		return []byte(getRstContent(content))
 	}
@@ -409,6 +406,8 @@ func (page *Page) update(f interface{}) error {
 			}
 		case "status":
 			page.Status = interfaceToString(v)
+		case "tocdepthlimit":
+			page.TocDepthLimit = interfaceToInt(v)
 		default:
 			// If not one of the explicit values, store in Params
 			switch vv := v.(type) {
@@ -588,17 +587,17 @@ func markdownRender(content []byte) []byte {
 	htmlFlags := 0
 	htmlFlags |= blackfriday.HTML_SKIP_SCRIPT
 	htmlFlags |= blackfriday.HTML_USE_SMARTYPANTS
-	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "")
+	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "", 0)
 
 	return blackfriday.Markdown(content, renderer, 0)
 }
 
-func markdownRenderWithTOC(content []byte) []byte {
+func markdownRenderWithTOC(content []byte, depthLimit int) []byte {
 	htmlFlags := 0
 	htmlFlags |= blackfriday.HTML_SKIP_SCRIPT
 	htmlFlags |= blackfriday.HTML_TOC
 	htmlFlags |= blackfriday.HTML_USE_SMARTYPANTS
-	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "")
+	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "", depthLimit)
 
 	return blackfriday.Markdown(content, renderer, 0)
 }

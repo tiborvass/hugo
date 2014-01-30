@@ -16,7 +16,7 @@ package hugolib
 import (
 	"bytes"
 	"fmt"
-	"github.com/spf13/hugo/template/bundle"
+	"github.com/tiborvass/hugo/template/bundle"
 	"html/template"
 	"strings"
 	"unicode"

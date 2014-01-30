@@ -14,7 +14,7 @@
 package main
 
 import (
-	"github.com/spf13/hugo/commands"
+	"github.com/tiborvass/hugo/commands"
 )
 
 func main() {

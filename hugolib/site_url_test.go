@@ -1,8 +1,8 @@
 package hugolib
 
 import (
-	"github.com/spf13/hugo/source"
-	"github.com/spf13/hugo/target"
+	"github.com/tiborvass/hugo/source"
+	"github.com/tiborvass/hugo/target"
 	"html/template"
 	"testing"
 )

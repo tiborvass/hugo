@@ -3,7 +3,7 @@ package bundle
 import (
 	"errors"
 	"github.com/eknkc/amber"
-	"github.com/spf13/hugo/helpers"
+	"github.com/tiborvass/hugo/helpers"
 	"html"
 	"html/template"
 	"io"
