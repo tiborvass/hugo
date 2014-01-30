@@ -584,22 +584,22 @@ func (page *Page) Convert() error {
 }
 
 func markdownRender(content []byte) []byte {
-	htmlFlags := 0
+	htmlFlags := blackfriday.HTML_COMMON
 	htmlFlags |= blackfriday.HTML_SKIP_SCRIPT
 	htmlFlags |= blackfriday.HTML_USE_SMARTYPANTS
 	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "", 0)
 
-	return blackfriday.Markdown(content, renderer, 0)
+	return blackfriday.Markdown(content, renderer, blackfriday.EXTENSION_COMMON)
 }
 
 func markdownRenderWithTOC(content []byte, depthLimit int) []byte {
-	htmlFlags := 0
+	htmlFlags := blackfriday.HTML_COMMON
 	htmlFlags |= blackfriday.HTML_SKIP_SCRIPT
 	htmlFlags |= blackfriday.HTML_TOC
 	htmlFlags |= blackfriday.HTML_USE_SMARTYPANTS
 	renderer := blackfriday.HtmlRenderer(htmlFlags, "", "", depthLimit)
 
-	return blackfriday.Markdown(content, renderer, 0)
+	return blackfriday.Markdown(content, renderer, blackfriday.EXTENSION_COMMON)
 }
 
 func extractTOC(content []byte) (newcontent []byte, toc []byte) {
