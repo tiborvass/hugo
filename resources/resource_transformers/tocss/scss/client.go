@@ -14,7 +14,6 @@
 package scss
 
 import (
-	"github.com/bep/go-tocss/scss"
 	"github.com/gohugoio/hugo/helpers"
 	"github.com/gohugoio/hugo/hugolib/filesystems"
 	"github.com/gohugoio/hugo/resources"
@@ -59,42 +58,20 @@ type Options struct {
 	EnableSourceMap bool
 }
 
-type options struct {
-	// The options we receive from the end user.
-	from Options
-
-	// The options we send to the SCSS library.
-	to scss.Options
-}
-
 func (c *Client) ToCSS(res resource.Resource, opts Options) (resource.Resource, error) {
-	internalOptions := options{
-		from: opts,
-	}
-
-	// Transfer values from client.
-	internalOptions.to.Precision = opts.Precision
-	internalOptions.to.OutputStyle = scss.OutputStyleFromString(opts.OutputStyle)
-
-	if internalOptions.to.Precision == 0 {
-		// bootstrap-sass requires 8 digits precision. The libsass default is 5.
-		// https://github.com/twbs/bootstrap-sass/blob/master/README.md#sass-number-precision
-		internalOptions.to.Precision = 8
-	}
-
 	return c.rs.Transform(
 		res,
-		&toCSSTransformation{c: c, options: internalOptions},
+		&toCSSTransformation{c: c, options: opts},
 	)
 }
 
 type toCSSTransformation struct {
 	c       *Client
-	options options
+	options Options
 }
 
 func (t *toCSSTransformation) Key() resources.ResourceTransformationKey {
-	return resources.NewResourceTransformationKey("tocss", t.options.from)
+	return resources.NewResourceTransformationKey("tocss", t.options)
 }
 
 func DecodeOptions(m map[string]interface{}) (opts Options, err error) {

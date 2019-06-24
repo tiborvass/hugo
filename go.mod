@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go v1.19.40
 	github.com/bep/debounce v1.2.0
 	github.com/bep/gitmap v1.1.0
-	github.com/bep/go-tocss v0.6.0
+	github.com/chaseadamsio/goorgeous v1.1.0 // indirect
 	github.com/cpuguy83/go-md2man v1.0.8 // indirect
 	github.com/disintegration/imaging v1.6.0
 	github.com/dustin/go-humanize v1.0.0
@@ -43,6 +43,7 @@ require (
 	github.com/pkg/errors v0.8.1
 	github.com/russross/blackfriday v1.5.3-0.20190124082335-a477dd164691
 	github.com/sanity-io/litter v1.1.0
+	github.com/shopspring/decimal v0.0.0-20180709203117-cd690d0c9e24 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/spf13/afero v1.2.2
 	github.com/spf13/cast v1.3.0
@@ -53,6 +54,7 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/stretchr/testify v1.3.0
 	github.com/tdewolff/minify/v2 v2.3.7
+	github.com/wellington/sass v0.0.0-20160911051022-cab90b3986d6
 	github.com/yosssi/ace v0.0.5
 	go.opencensus.io v0.22.0 // indirect
 	gocloud.dev v0.15.0
